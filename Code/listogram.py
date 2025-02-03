@@ -20,25 +20,54 @@ class Listogram(list):
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
-        # TODO: Increase word frequency by count
+        for i, (existing_word, frequency) in enumerate(self):
+            if existing_word == word:
+                self[i] = (existing_word, frequency + count)
+                self.tokens += count
+                return
+            
+        # If the word was not found, add it as a new tuple
+        self.append((word, count))
+        self.types += 1 
+        self.tokens += count
+
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
-        # TODO: Retrieve word frequency count
+        for existing_word, frequency in self:
+            if existing_word == word:
+                return frequency
+        return 0 # If word is not found
 
     def __contains__(self, word):
         """Return boolean indicating if given word is in this histogram."""
-        # TODO: Check if word is in this histogram
+        return any(existing_word == word for existing_word, _ in self)
 
     def index_of(self, target):
         """Return the index of entry containing given target word if found in
-        this histogram, or None if target word is not found."""
-        # TODO: Implement linear search to find index of entry with target word
+        this histogram, or None if target word is not found."""       
+        for i, (word, _) in enumerate(self):
+            if word == target:
+                return i
+        return None  # Only return None after checking all elements
 
     def sample(self):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
-        # TODO: Randomly choose a word based on its frequency in this histogram
+        cumulative_frequency = []
+        total = 0
+
+        # Create cumulative distribution list
+        for word, count in self:
+            total += count
+            cumulative_frequency.append((total, word))
+
+        random_value = random.randint(1, total)
+
+        for cumulative, word in cumulative_frequency:
+            if random_value <= cumulative:
+                return word
+
 
 
 def print_histogram(word_list):

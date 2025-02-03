@@ -11,8 +11,8 @@ def histogram(filename):
         dict: A dictionary where keys are words and values are their occurrence counts. 
     """
     with open(filename, 'r') as f:
-        text = f.read().lower()
-        text = text.translate(str.maketrans('', '', string.punctuation))
+        text_lower = f.read().lower()
+        text = text_lower.translate(str.maketrans('', '', string.punctuation))
         words = text.split()
 
         word_freq = {}
