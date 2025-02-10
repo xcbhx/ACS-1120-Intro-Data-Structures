@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route("/")
 def home():
     """Route that returns a web page containing the generated text."""
-    return "<p>Hello, World</p>"
+    return "Hello, World"
     # return "<p>TODO: Return a word here!</p>"
 
 
