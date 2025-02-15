@@ -1,5 +1,5 @@
 from flask import Flask
-from histogram import histogram
+from .histogram import histogram
 import random
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ def weighted_choice(histogram):
 
 @app.route("/")
 def home():
-    # Generate a lis of 10 words using weighted_choice.
+    # Generate a list of 10 words using weighted_choice.
     words = [weighted_choice(hist) for _ in range(10)]
     sentence = " ".join(words)
     return f"<p>{sentence}.</p>"
