@@ -27,7 +27,7 @@ class Listogram(list):
                 return
             
         # If the word was not found, add it as a new tuple
-        self.append((word, count))
+        self.append([word, count])
         self.types += 1 
         self.tokens += count
 
