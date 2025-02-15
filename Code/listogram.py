@@ -20,15 +20,17 @@ class Listogram(list):
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
-        for i, (existing_word, frequency) in enumerate(self):
-            if existing_word == word:
-                self[i] = (existing_word, frequency + count)
-                self.tokens += count
-                return
-            
-        # If the word was not found, add it as a new tuple
-        self.append((word, count))
-        self.types += 1 
+        # calls index_of method to find the index of word in self
+        index = self.index_of(word)
+        if index is not None:
+            # self[index] refers to the tuple (word, frequency)
+            # self[index][1] is the current frequency
+            self[index] = (word, self[index][1] + count)
+        else:
+            self.append((word, count))
+            # tracks number of distinct words only if new word is added
+            self.types += 1
+        # tracks total number of word occurences  
         self.tokens += count
 
 
