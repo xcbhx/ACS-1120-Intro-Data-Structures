@@ -11,27 +11,25 @@ class Listogram(list):
         """Initialize this histogram as a new list and count given words."""
         super(Listogram, self).__init__()  # Initialize this as a new list
         # Add properties to track useful word counts for this histogram
+        self.list_histogram = []
         self.types = 0  # Count of distinct word types in this histogram
         self.tokens = 0  # Total count of all word tokens in this histogram
         # Count words in given list, if any
-        if word_list is not None:
+        if word_list:
             for word in word_list:
                 self.add_count(word)
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
-        # calls index_of method to find the index of word in self
-        index = self.index_of(word)
-        if index is not None:
-            # self[index] refers to the tuple (word, frequency)
-            # self[index][1] is the current frequency
-            self[index] = (word, self[index][1] + count)
-        else:
-            self.append((word, count))
-            # tracks number of distinct words only if new word is added
-            self.types += 1
-        # tracks total number of word occurences  
-        self.tokens += count
+        for item in self:
+            if item[0] == word:
+                item[1] += count # Increase count if word exists
+                break
+        else:    
+            self.append([word, count]) # Append new word if not found
+            self.types += 1 # Increase distinct word count  
+
+        self.tokens += count # Increase total number of word occurences 
 
 
     def frequency(self, word):
@@ -56,18 +54,17 @@ class Listogram(list):
     def sample(self):
         """Return a word from this histogram, randomly sampled by weighting
         each word's probability of being chosen by its observed frequency."""
-        cumulative_frequency = []
-        total = 0
+        total = sum(count for _, count in self) # Calculate total once
 
-        # Create cumulative distribution list
+        random_value = random.uniform(0, total) 
+        # print(f"Total Tokens: {total}, Random Value: {random_value}")
+
+        cumulative = 0
         for word, count in self:
-            total += count
-            cumulative_frequency.append((total, word))
-
-        random_value = random.randint(1, total)
-
-        for cumulative, word in cumulative_frequency:
-            if random_value <= cumulative:
+            cumulative += count
+            # print(f"Checking word: {word}, Cumulative: {cumulative}")
+            if random_value < cumulative:
+                # print(f"Selected word: {word}")
                 return word
 
 
