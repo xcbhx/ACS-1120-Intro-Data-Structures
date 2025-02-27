@@ -71,7 +71,7 @@ class LinkedList:
         # TODO: Else append node after tail
         # Node instance
         new_node = Node(item)
-        if self.is_empty() == True:
+        if self.is_empty():
             self.head = new_node
             self.tail = new_node
         else:
@@ -93,17 +93,17 @@ class LinkedList:
             self.head = new_node # Update head to the new node
 
 
-    def find(self, matcher):
+    def find(self, item):
         """Return an item from this linked list if it is present.
         TODO: Best case running time: O(1) Constant because if the item you're looking 
-        for is the first node in the list. Matcher function returns True for the first node.
+        for is the first node in the list. item function returns True for the first node.
         TODO: Worst case running time: O(n) Linear because if the item you're looking 
         for is at the end of the list or not present then you have to traverse all nodes in the list."""
         # TODO: Loop through all nodes to find item, if present return True otherwise False
         node = self.head # Start at the head
         while node is not None:
-            if matcher(node.data) == True: 
-                return node.data
+            if node.data == item: 
+                return True
             node = node.next # Move to the next node
         return False
 
@@ -129,7 +129,7 @@ class LinkedList:
                         self.tail = None
                 else:
                     previous.next = current.next # bypass the current node
-                    if current.next is not None: # If deleting the tail
+                    if current.next is None: # If deleting the tail
                         self.tail = previous
                 
                 return # Item deleted

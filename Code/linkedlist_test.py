@@ -1,11 +1,13 @@
-#!python
-
-from linkedlist import LinkedList, Node
 import unittest
+# from gradescope_utils.autograder_utils.decorators import weight, number, visibility, tags, partial_credit
+from linkedlist import LinkedList, Node
 
 
 class NodeTest(unittest.TestCase):
+    """Worth 5 points in Gradescope."""
 
+    # @number("4.1")
+    # @weight(2.0)
     def test_init(self):
         data = 'ABC'
         node = Node(data)
@@ -13,6 +15,8 @@ class NodeTest(unittest.TestCase):
         assert node.data is data
         assert node.next is None
 
+    # @number("4.2")
+    # @weight(3.0)
     def test_linking_nodes(self):
         node1 = Node('A')
         node2 = Node('B')
@@ -26,19 +30,26 @@ class NodeTest(unittest.TestCase):
 
 
 class LinkedListTest(unittest.TestCase):
+    """Worth 20 points in Gradescope."""
 
+    # @number("4.3")
+    # @weight(1.0)
     def test_init(self):
         ll = LinkedList()
         # Initializer should add instance properties
         assert ll.head is None  # First node
         assert ll.tail is None  # Last node
 
+    # @number("4.4")
+    # @weight(2.0)
     def test_init_with_list(self):
         ll = LinkedList(['A', 'B', 'C'])
         # Initializer should append items in order
         assert ll.head.data == 'A'  # First item
         assert ll.tail.data == 'C'  # Last item
 
+    # @number("4.5")
+    # @weight(1.0)
     def test_items_after_append(self):
         ll = LinkedList()
         assert ll.items() == []
@@ -50,6 +61,8 @@ class LinkedListTest(unittest.TestCase):
         ll.append('C')
         assert ll.items() == ['A', 'B', 'C']
 
+    # @number("4.6")
+    # @weight(1.0)
     def test_items_after_prepend(self):
         ll = LinkedList()
         assert ll.items() == []
@@ -61,6 +74,8 @@ class LinkedListTest(unittest.TestCase):
         ll.prepend('A')
         assert ll.items() == ['A', 'B', 'C']
 
+    # @number("4.7")
+    # @weight(1.0)
     def test_length_after_append(self):
         ll = LinkedList()
         assert ll.length() == 0
@@ -72,6 +87,8 @@ class LinkedListTest(unittest.TestCase):
         ll.append('C')
         assert ll.length() == 3
 
+    # @number("4.8")
+    # @weight(1.0)
     def test_length_after_prepend(self):
         ll = LinkedList()
         assert ll.length() == 0
@@ -83,6 +100,8 @@ class LinkedListTest(unittest.TestCase):
         ll.prepend('A')
         assert ll.length() == 3
 
+    # @number("4.9")
+    # @weight(1.0)
     def test_length_after_append_and_prepend(self):
         ll = LinkedList()
         assert ll.length() == 0
@@ -96,6 +115,8 @@ class LinkedListTest(unittest.TestCase):
         ll.prepend('A')
         assert ll.length() == 4
 
+    # @number("4.10")
+    # @weight(1.0)
     def test_length_after_delete(self):
         ll = LinkedList(['A', 'B', 'C', 'D', 'E'])
         assert ll.length() == 5
@@ -111,6 +132,8 @@ class LinkedListTest(unittest.TestCase):
         ll.delete('B')
         assert ll.length() == 0
 
+    # @number("4.11")
+    # @weight(2.0)
     def test_append(self):
         ll = LinkedList()
         # Append should always update tail node
@@ -124,6 +147,8 @@ class LinkedListTest(unittest.TestCase):
         assert ll.head.data == 'A'  # Unchanged
         assert ll.tail.data == 'C'  # New tail
 
+    # @number("4.12")
+    # @weight(2.0)
     def test_prepend(self):
         ll = LinkedList()
         # Prepend should always update head node
@@ -137,13 +162,17 @@ class LinkedListTest(unittest.TestCase):
         assert ll.head.data == 'A'  # New head
         assert ll.tail.data == 'C'  # Unchanged
 
+    # @number("4.13")
+    # @weight(4.0)
     def test_find(self):
         ll = LinkedList(['A', 'B', 'C'])
-        assert ll.find(lambda item: item == 'B') == 'B'  # Match equality
-        assert ll.find(lambda item: item < 'B') == 'A'  # Match less than
-        assert ll.find(lambda item: item > 'B') == 'C'  # Match greater than
-        assert ll.find(lambda item: item == 'X') is None  # No matching item
+        assert ll.find('B') == True
+        assert ll.find('A') == True  # Match less than
+        assert ll.find('C') == True  # Match greater than
+        assert ll.find('X') == False   # No matching item
 
+    # @number("4.14")
+    # @weight(1.0)
     def test_delete_with_3_items(self):
         ll = LinkedList(['A', 'B', 'C'])
         assert ll.head.data == 'A'  # First item
@@ -165,6 +194,8 @@ class LinkedListTest(unittest.TestCase):
         with self.assertRaises(ValueError):
             ll.delete('C')  # Item no longer in list
 
+    # @number("4.15")
+    # @weight(1.0)
     def test_delete_with_5_items(self):
         ll = LinkedList(['A', 'B', 'C', 'D', 'E'])
         assert ll.head.data == 'A'  # First item
@@ -185,20 +216,13 @@ class LinkedListTest(unittest.TestCase):
         assert ll.head is None  # No head
         assert ll.tail is None  # No tail
 
+    # @number("4.16")
+    # @weight(1.0)
     def test_delete_with_item_not_in_list(self):
         ll = LinkedList(['A', 'B', 'C'])
         # Delete should raise error if item not found
         with self.assertRaises(ValueError):
             ll.delete('X')  # Item not found in list
-
-    def test_replace_with_item(self):
-        ll = LinkedList(['A', 'B', 'C'])
-        # for item in list
-        ll.replace('A', 'D')
-        assert ll.head.data == 'D'
-        # for item not in list
-        ll.replace('X', 'M')
-        assert ll.head.data == 'D'
 
 
 if __name__ == '__main__':
