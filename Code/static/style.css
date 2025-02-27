@@ -1,0 +1,23 @@
+body {
+  background-color: #282c34;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.5em;
+  padding: 20px;
+  max-width: 800px;
+}

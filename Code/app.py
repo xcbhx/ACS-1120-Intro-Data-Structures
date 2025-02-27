@@ -1,5 +1,5 @@
-from flask import Flask
-from .histogram import histogram
+from flask import Flask, render_template
+from histogram import histogram
 import random
 
 app = Flask(__name__)
@@ -20,8 +20,8 @@ def weighted_choice(histogram):
 def home():
     # Generate a list of 10 words using weighted_choice.
     words = [weighted_choice(hist) for _ in range(10)]
-    sentence = " ".join(words)
-    return f"<p>{sentence}.</p>"
+    sentence = " ".join(words).capitalize().replace("'", "")
+    return render_template("index.html", sentence=sentence)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
