@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from histogram import histogram
+from .histogram import histogram
 import random
 
 app = Flask(__name__)
