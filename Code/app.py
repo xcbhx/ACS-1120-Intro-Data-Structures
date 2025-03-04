@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from markov import MarkovChain, read_file
+from .markov import MarkovChain, read_file
 import os
 
 
