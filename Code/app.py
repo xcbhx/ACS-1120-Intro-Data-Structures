@@ -1,26 +1,17 @@
 from flask import Flask, render_template
-from .histogram import histogram
-import random
+from .markov import MarkovChain, read_file
+
 
 app = Flask(__name__)
 
-# Initialize the hsitogram once when the server starts
-hist = histogram("Code/histogram_book.txt")
-
-def weighted_choice(histogram):
-    total = sum(histogram.values())
-    random_value = random.uniform(0, total)
-    cumulative = 0
-    for word, count in histogram.items():
-        cumulative += count
-        if cumulative >= random_value:
-            return word
+# Load the book and create the Markov Chain
+book = read_file("Code/histogram_book.txt")
+markov = MarkovChain(book, order=2) # Create the markov chain.
 
 @app.route("/")
 def home():
-    # Generate a list of 10 words using weighted_choice.
-    words = [weighted_choice(hist) for _ in range(10)]
-    sentence = " ".join(words).capitalize().replace("'", "")
+    # Generate a sentence using the Markov Chain's walk method.
+    sentence = markov.walk(10).capitalize()
     return render_template("index.html", sentence=sentence)
 
 if __name__ == "__main__":
